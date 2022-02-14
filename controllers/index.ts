@@ -1,1 +1,1 @@
-export * from './PostController';
+export * from './UserController';
