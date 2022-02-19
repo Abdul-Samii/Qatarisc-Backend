@@ -4,6 +4,7 @@ export interface CreateUserInput{
     phone:string;
     email:string;
     password:string;
+    dp:string
 }
 
 export interface LoginLoginInputs{

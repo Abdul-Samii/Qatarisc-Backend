@@ -1,9 +1,11 @@
 import express,{Response} from 'express';
-import { CreatePost, GetPost, Test } from '../controllers';
+import { CreatePost, GetPost, RegisterUser, Test } from '../controllers';
 import { uploadImage } from '../middlewares/ImageUpload';
 const router = express.Router();
 
 router.post('/post',uploadImage,CreatePost);
 router.get('/post',GetPost);
-router.get('/test',Test)
+router.get('/test',Test);
+router.post('/register',RegisterUser);
+
 export {router as UserRoute};

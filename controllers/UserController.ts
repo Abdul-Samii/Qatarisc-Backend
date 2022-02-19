@@ -32,8 +32,10 @@ export const Test=async(req:Request,res:Response,next:NextFunction)=>{
 //Get a Post
 export const GetPost = async(req:Request,res:Response,next:NextFunction)=>{
     // const user = req.user;
-    // console.log(user);
-        const posts = await Post.findById({_id:req.body.id});
+     console.log('user');
+
+        const posts = await Post.find();
+        console.log(posts)
         if(posts!==null)
         {
             return res.status(200).json(posts)

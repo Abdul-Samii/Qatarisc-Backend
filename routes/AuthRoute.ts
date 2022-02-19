@@ -1,3 +1,5 @@
+import { RegisterUser } from "../controllers";
+
 const router = require("express").Router();
 const passport = require('passport');
 
@@ -36,5 +38,9 @@ router.get(
     failureRedirect: "/login/failed",
   })
 );
+
+
+
+router.post('/register',RegisterUser);
 
 export {router as AuthRoute} 

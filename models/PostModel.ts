@@ -10,10 +10,10 @@ interface PostDoc extends Document{
 }
 
 const PostSchema = new Schema({
-   userId:{
-        type:String,
-        required:true
-    },
+   userId:[{
+       type:mongoose.SchemaTypes.ObjectId,
+       ref:'users',
+   }],
     text:{
         type:String,
         required:true
