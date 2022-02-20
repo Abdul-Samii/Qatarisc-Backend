@@ -4,6 +4,13 @@ export interface PostDto {
     images:[string];
     time:[string];
     likes:any;
-    comments:[string];
-    commenter:any;
+    comments:any;
+}
+
+
+export interface CommentDto {
+    users:any;
+    text:string;
+    time:[string];
+    likes:any;
 }

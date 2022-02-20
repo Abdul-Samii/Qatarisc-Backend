@@ -1,15 +1,13 @@
 import mongoose,{Schema,Document} from "mongoose";
 
-interface PostDoc extends Document{
+interface CommentDoc extends Document{
     users:any;
     text:string;
-    images:[string];
     likes:any;
-    comments:any;
-}
+    }
 
-const PostSchema = new Schema({
-   users:[{
+const CommentSchema = new Schema({
+   user:[{
        type:mongoose.SchemaTypes.ObjectId,
        ref:'user',
    }],
@@ -17,25 +15,15 @@ const PostSchema = new Schema({
         type:String,
         required:true
     },
-    images:{
-        type:[String],
-    },
     likes:[{
         type:mongoose.SchemaTypes.ObjectId,
         ref:'user'
     }],
-
-   comments:[{
-       type:mongoose.SchemaTypes.ObjectId,
-       ref:'comment'
-   }]
-   
-
 },
 {
     timestamps:true
 }
 );
 
-const Post = mongoose.model<PostDoc>('post',PostSchema);
-export {Post}
+const Comment = mongoose.model<CommentDoc>('comment',CommentSchema);
+export {Comment}

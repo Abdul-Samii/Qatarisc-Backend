@@ -1,12 +1,12 @@
 import { Request,Response, NextFunction } from "express";
-import { PostDto } from "../dto/Post.dto";
-import { Post, User } from "../models";
+import { CommentDto, PostDto } from "../dto/Post.dto";
+import { Comment, Post, User } from "../models";
 
 
 
 //Create Post
 export const CreatePost = async(req:Request,res:Response,next:NextFunction)=>{
-    const {users,text,time,images,likes,comments,commenter} = <PostDto>req.body;
+    const {users,text,time,images,likes,comments} = <PostDto>req.body;
    console.log(req.body)
 
 
@@ -17,7 +17,6 @@ export const CreatePost = async(req:Request,res:Response,next:NextFunction)=>{
         time:time,
         comments:comments,
         likes:likes,
-        commenter:commenter
     })
     const result = await createPost.save();
 
@@ -33,7 +32,7 @@ export const Test=async(req:Request,res:Response,next:NextFunction)=>{
 export const GetPost = async(req:Request,res:Response,next:NextFunction)=>{
     // const user = req.user;
 
-        const posts = await Post.find().populate("users").populate("likes")
+        const posts = await Post.find().populate("users").populate("likes").populate("comments").populate("comments.user")
         if(posts!==null)
         {
             return res.status(200).json(posts)
@@ -48,19 +47,19 @@ export const GetPost = async(req:Request,res:Response,next:NextFunction)=>{
 
 //Like a Post
 export const LikePost = async(req:Request,res:Response,next:NextFunction)=>{
-    const availiblePost = await Post.findById({_id:"6212035328bcb0a6037801a1"})
+    const availiblePost = await Post.findById({_id:req.body.postId})
 if(availiblePost!==null)
 {
     const likeUsers = availiblePost.likes.toString()
-    const likechecker = likeUsers.includes("6212034428bcb0a60378019e")
+    const likechecker = likeUsers.includes(req.body.userId)
 console.log(likechecker)
     if(likechecker)
         {
             console.log("YO1")
 
-            await Post.findByIdAndUpdate({_id:"6212035328bcb0a6037801a1"},{
+            await Post.findByIdAndUpdate({_id:req.body.postId},{
                 $pull:{
-                    likes:"6212034428bcb0a60378019e"
+                    likes:req.body.userId
                 }
             });
         
@@ -68,9 +67,9 @@ console.log(likechecker)
         else
         {    
             console.log("YO2")
-            await Post.findByIdAndUpdate({_id:"6212035328bcb0a6037801a1"},{
+            await Post.findByIdAndUpdate({_id:req.body.postId},{
             $push:{
-                likes:"6212034428bcb0a60378019e"
+                likes:req.body.userId
             }
         });
     }
@@ -86,18 +85,60 @@ console.log(likechecker)
 //Comment a Post
 export const CommentPost = async(req:Request,res:Response,next:NextFunction)=>{
     const availiblePost = await Post.findById({_id:req.body.postId})
+    
 if(availiblePost!==null)
 {
+    const commentNew = await Comment.create({
+        user:req.body.userId,
+        text:req.body.text,
+    })
     
-    
-            await Post.findByIdAndUpdate({_id:req.body.postId},{
+console.log(commentNew)    
+            const yesh=  await Post.findByIdAndUpdate({_id:req.body.postId},{
             $push:{
-                comments:req.body.comment,
-                commenter:req.body.userId
+                comments:commentNew._id
             }
         });
+console.log("y ",yesh)
     
 }
      res.status(200).json("no post");
 
 }
+
+
+//Like a Comment
+export const LikeComment = async(req:Request,res:Response,next:NextFunction)=>{
+    const availibleComment = await Comment.findById({_id:req.body.commentId})
+if(availibleComment!==null)
+{
+    const likeUsers = availibleComment.likes.toString()
+    const likechecker = likeUsers.includes(req.body.userId)
+console.log(likechecker)
+    if(likechecker)
+        {
+
+            await Comment.findByIdAndUpdate({_id:req.body.commentId},{
+                $pull:{
+                    likes:req.body.userId
+                }
+            });
+        
+        }
+        else
+        {    
+            await Comment.findByIdAndUpdate({_id:req.body.commentId},{
+            $push:{
+                likes:req.body.userId
+            }
+        });
+    }
+}
+
+
+     res.status(200).json("no post");
+
+}
+
+
+
