@@ -5,7 +5,7 @@ import { CreateUserInput } from "../dto";
 
 //Create User
 export const RegisterUser = async(req:Request,res:Response,next:NextFunction)=>{
-    console.log(req)
+    console.log(req.body)
     const {name,email,address,phone,dp} = <CreateUserInput>req.body;
     const createUser = await User.create({
         name:name,

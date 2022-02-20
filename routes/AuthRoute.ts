@@ -41,6 +41,5 @@ router.get(
 
 
 
-router.post('/register',RegisterUser);
 
 export {router as AuthRoute} 

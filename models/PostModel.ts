@@ -1,7 +1,7 @@
 import mongoose,{Schema,Document} from "mongoose";
 
 interface PostDoc extends Document{
-    userId:string;
+    users:any;
     text:string;
     images:[string];
     likes:any;
@@ -10,9 +10,9 @@ interface PostDoc extends Document{
 }
 
 const PostSchema = new Schema({
-   userId:[{
+   users:[{
        type:mongoose.SchemaTypes.ObjectId,
-       ref:'users',
+       ref:'user',
    }],
     text:{
         type:String,
@@ -23,14 +23,14 @@ const PostSchema = new Schema({
     },
     likes:[{
         type:mongoose.SchemaTypes.ObjectId,
-        ref:'users'
+        ref:'user'
     }],
     comments:{
-        type:[String]
+        type:[String],
     },
     commenter:[{
         type:mongoose.SchemaTypes.ObjectId,
-        ref:'users'
+        ref:'user'
     }],
 
 },

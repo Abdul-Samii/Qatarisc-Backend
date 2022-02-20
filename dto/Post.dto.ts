@@ -1,5 +1,5 @@
 export interface PostDto {
-    userId:string;
+    users:any;
     text:string;
     images:[string];
     time:[string];
