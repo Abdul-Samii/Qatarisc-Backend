@@ -20,6 +20,12 @@ export const CreatePost = async(req:Request,res:Response,next:NextFunction)=>{
     })
     const result = await createPost.save();
 
+    const userSide = await User.findByIdAndUpdate({_id:users},{
+        $push:{
+            posts:result._id
+        }
+    });
+
     res.status(200).json(result);
 
 }
@@ -32,7 +38,7 @@ export const Test=async(req:Request,res:Response,next:NextFunction)=>{
 export const GetPost = async(req:Request,res:Response,next:NextFunction)=>{
     // const user = req.user;
 
-        const posts = await Post.find().populate("users").populate("likes").populate("comments").populate("comments.user")
+        const posts = await Post.find().populate("users").populate("likes").populate("comments")
         if(posts!==null)
         {
             return res.status(200).json(posts)
@@ -41,6 +47,22 @@ export const GetPost = async(req:Request,res:Response,next:NextFunction)=>{
 
     
     return res.status(400).json({"message":"Posts information not found"});
+
+}
+//Get a post for only user
+export const GetUserPost = async(req:Request,res:Response,next:NextFunction)=>{
+    // const user = req.user;
+console.log(req.body.userId)
+        const posts = await Post.find({users:req.body.userId}).populate("users").populate("likes").populate("comments")
+        if(posts!==null)
+        {
+            console.log(posts)
+            return res.status(200).json(posts)
+        }
+        return res.status(400).json({"message":"No Posts Availible"});
+
+    
+    return res.status(40).json({"message":"Posts information not found"});
 
 }
 

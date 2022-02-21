@@ -6,6 +6,7 @@ interface PostDoc extends Document{
     images:[string];
     likes:any;
     comments:any;
+    isPost:boolean;
 }
 
 const PostSchema = new Schema({
@@ -28,8 +29,11 @@ const PostSchema = new Schema({
    comments:[{
        type:mongoose.SchemaTypes.ObjectId,
        ref:'comment'
-   }]
-   
+   }],
+   isPost:{
+       type:Boolean,
+       default:true
+   }
 
 },
 {

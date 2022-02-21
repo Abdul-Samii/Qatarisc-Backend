@@ -4,7 +4,16 @@ export interface CreateUserInput{
     phone:string;
     email:string;
     password:string;
-    dp:string
+    dp:string;
+    bio:string;
+    instagram:string;
+    followers:any;
+    followings:any;
+    dob:string;
+    country:string;
+    profession:string;
+    allowMsg:boolean;
+    post:any;
 }
 
 export interface LoginLoginInputs{

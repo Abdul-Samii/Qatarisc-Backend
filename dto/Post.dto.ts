@@ -5,6 +5,7 @@ export interface PostDto {
     time:[string];
     likes:any;
     comments:any;
+    isPost:boolean;
 }
 
 
@@ -13,4 +14,5 @@ export interface CommentDto {
     text:string;
     time:[string];
     likes:any;
+    isPost:boolean;
 }
