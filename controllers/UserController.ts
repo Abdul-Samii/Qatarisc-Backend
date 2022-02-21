@@ -138,7 +138,24 @@ console.log(likechecker)
 
      res.status(200).json("no post");
 
+
+    }
+
+
+
+    //GET USER 
+
+export const GetUser = async(req:Request,res:Response,next:NextFunction)=>{
+    // const user = req.user;
+console.log(req.body.userId)
+        const users = await User.findById(req.body.userId)
+        if(users!==null)
+        {
+            return res.status(200).json(users)
+        }
+        return res.status(404).json({"message":"No Users Availible"});
+
+    
+
 }
-
-
 

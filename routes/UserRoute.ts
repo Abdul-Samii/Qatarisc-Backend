@@ -1,5 +1,5 @@
 import express,{Response} from 'express';
-import { CommentPost, CreatePost, GetPost, LikeComment, LikePost, RegisterUser, Test } from '../controllers';
+import { CommentPost, CreatePost, GetPost, GetUser, LikeComment, LikePost, RegisterUser, Test } from '../controllers';
 import { uploadImage } from '../middlewares/ImageUpload';
 const router = express.Router();
 
@@ -10,4 +10,5 @@ router.post('/register',RegisterUser);
 router.post('/likepost',LikePost);
 router.post('/comment',CommentPost);
 router.post('/likecomment',LikeComment);
+router.post('/getUser',GetUser);
 export {router as UserRoute};
